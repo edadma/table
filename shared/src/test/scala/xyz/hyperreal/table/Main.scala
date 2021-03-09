@@ -2,7 +2,7 @@ package xyz.hyperreal.table
 
 object Main extends App {
 
-  println
+  println()
   println(
     new TextTable {
       header("one", "two", "three")
