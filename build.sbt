@@ -1,8 +1,8 @@
 lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file(".")).
   settings(
     name := "table",
-    version := "1.0.0-snapshot.2",
-    scalaVersion := "2.13.4",
+    version := "1.0.0-snapshot.3",
+    scalaVersion := "2.13.5",
     scalacOptions ++=
       Seq(
         "-deprecation", "-feature", "-unchecked",
