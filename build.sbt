@@ -1,8 +1,11 @@
+ThisBuild / licenses += "ISC" -> url("https://opensource.org/licenses/ISC")
+ThisBuild / versionScheme := Some("semver-spec")
+
 lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file(".")).
   settings(
     name := "table",
     version := "1.0.0-snapshot.3",
-    scalaVersion := "2.13.5",
+    scalaVersion := "2.13.6",
     scalacOptions ++=
       Seq(
         "-deprecation", "-feature", "-unchecked",
@@ -10,6 +13,8 @@ lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file("
         "-Xasync"
       ),
     organization := "xyz.hyperreal",
+    githubOwner := "edadma",
+    githubRepository := "table",
     mainClass := Some("xyz.hyperreal.table.Main"),
     Test / mainClass := Some("xyz.hyperreal.table.Main"),
 //    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.3" % "test",
