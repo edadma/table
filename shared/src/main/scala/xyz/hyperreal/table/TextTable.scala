@@ -1,4 +1,4 @@
-package xyz.hyperreal.table
+package io.github.edadma.table
 
 import collection.mutable.ArrayBuffer
 import java.sql.ResultSet

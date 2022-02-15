@@ -1,4 +1,4 @@
-package xyz.hyperreal.table
+package io.github.edadma.table
 
 object Main extends App {
 

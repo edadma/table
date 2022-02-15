@@ -4,22 +4,22 @@ ThisBuild / versionScheme := Some("semver-spec")
 lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file(".")).
   settings(
     name := "table",
-    version := "1.0.0-snapshot.3",
-    scalaVersion := "2.13.6",
+    version := "1.0.0",
+    scalaVersion := "2.13.8",
     scalacOptions ++=
       Seq(
         "-deprecation", "-feature", "-unchecked",
         "-language:postfixOps", "-language:implicitConversions", "-language:existentials", "-language:dynamics",
         "-Xasync"
       ),
-    organization := "xyz.hyperreal",
+    organization := "io.github.edadma",
     githubOwner := "edadma",
     githubRepository := "table",
-    mainClass := Some("xyz.hyperreal.table.Main"),
-    Test / mainClass := Some("xyz.hyperreal.table.Main"),
+    mainClass := Some("io.github.edadma.table.Main"),
+    Test / mainClass := Some("io.github.edadma.table.Main"),
 //    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.3" % "test",
     publishMavenStyle := true,
-    publishArtifact in Test := false,
+    Test / publishArtifact := false,
     licenses := Seq("ISC" -> url("https://opensource.org/licenses/ISC"))
   ).
   jvmSettings(
