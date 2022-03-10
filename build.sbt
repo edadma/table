@@ -4,13 +4,12 @@ ThisBuild / versionScheme := Some("semver-spec")
 lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file(".")).
   settings(
     name := "table",
-    version := "1.0.0",
-    scalaVersion := "2.13.8",
+    version := "1.0.1",
+    scalaVersion := "3.1.1",
     scalacOptions ++=
       Seq(
         "-deprecation", "-feature", "-unchecked",
         "-language:postfixOps", "-language:implicitConversions", "-language:existentials", "-language:dynamics",
-        "-Xasync"
       ),
     organization := "io.github.edadma",
     githubOwner := "edadma",
@@ -23,7 +22,7 @@ lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file("
     licenses := Seq("ISC" -> url("https://opensource.org/licenses/ISC"))
   ).
   jvmSettings(
-    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.0.0" % "provided",
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
   ).
   nativeSettings(
     nativeLinkStubs := true,
