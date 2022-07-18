@@ -2,7 +2,8 @@ package io.github.edadma.table
 
 import collection.mutable.ArrayBuffer
 import java.sql.ResultSet
-import java.sql.Types.{DOUBLE => DBL, _}
+import java.sql.Types.{DOUBLE as DBL, *}
+import scala.collection.immutable.ArraySeq
 import scala.collection.mutable
 
 trait Alignment
@@ -100,7 +101,7 @@ class TextTable(border: Border = NONE,
 
   import TextTable.boxes._
 
-  private val table = new ArrayBuffer[IndexedSeq[Box]]
+  private val table = new ArrayBuffer[ArraySeq[Box]]
   private val lines = new mutable.HashSet[Int]
 
   private var ansi = true
@@ -119,9 +120,9 @@ class TextTable(border: Border = NONE,
     colaligns(col - 1) = align
   }
 
-  def header(s: String*): Unit = headerSeq(s.asInstanceOf[IndexedSeq[String]])
+  def header(s: String*): Unit = headerSeq(s)
 
-  def headerSeq(s: IndexedSeq[Any]): Unit = {
+  def headerSeq(s: Seq[Any]): Unit = {
     rowSeq(s)
 
     for (i <- 1 to columns) {
@@ -138,9 +139,9 @@ class TextTable(border: Border = NONE,
       line()
   }
 
-  def row(s: Any*): Unit = rowSeq(s.asInstanceOf[IndexedSeq[Any]])
+  def row(s: Any*): Unit = rowSeq(s)
 
-  def rowSeq(s: IndexedSeq[Any]): Unit = {
+  def rowSeq(s: Seq[Any]): Unit = {
     require(s.nonEmpty, "need at least one column")
 
     if (table.isEmpty) {
@@ -154,7 +155,7 @@ class TextTable(border: Border = NONE,
         case a: Array[_] => a.mkString("(", ", ", ")")
         case a: Seq[_]   => a.mkString("[", ", ", "]")
         case v           => String.valueOf(v)
-      } map (new Box(_))) :+ new Box("")
+      } map (new Box(_))) :+ new Box("") to ArraySeq
   }
 
   def alignment(col: Int, align: Alignment): Unit = {
@@ -186,7 +187,7 @@ class TextTable(border: Border = NONE,
     require(table.nonEmpty, "empty table")
 
     if (widths eq null) {
-      table += Vector.fill(columns + 1)(new Box(""))
+      table += ArraySeq.fill(columns + 1)(new Box(""))
       widths = table.transpose
         .map(_.map(_.contents.length).foldLeft(0)(_ max _))
         .toIndexedSeq
