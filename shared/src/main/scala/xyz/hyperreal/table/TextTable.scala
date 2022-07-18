@@ -122,7 +122,7 @@ class TextTable(border: Border = NONE,
 
   def header(s: String*): Unit = headerSeq(s)
 
-  def headerSeq(s: Seq[Any]): Unit = {
+  def headerSeq(s: collection.Seq[Any]): Unit = {
     rowSeq(s)
 
     for (i <- 1 to columns) {
@@ -141,7 +141,7 @@ class TextTable(border: Border = NONE,
 
   def row(s: Any*): Unit = rowSeq(s)
 
-  def rowSeq(s: Seq[Any]): Unit = {
+  def rowSeq(s: collection.Seq[Any]): Unit = {
     require(s.nonEmpty, "need at least one column")
 
     if (table.isEmpty) {
