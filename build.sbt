@@ -6,8 +6,8 @@ ThisBuild / versionScheme := Some("semver-spec")
 lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file(".")).
   settings(
     name := "table",
-    version := "1.0.3",
-    scalaVersion := "3.1.3",
+    version := "1.0.4",
+    scalaVersion := "3.2.0",
     scalacOptions ++=
       Seq(
         "-deprecation", "-feature", "-unchecked",
