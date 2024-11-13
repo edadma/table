@@ -6,8 +6,8 @@ ThisBuild / versionScheme := Some("semver-spec")
 lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file(".")).
   settings(
     name := "table",
-    version := "1.0.4",
-    scalaVersion := "3.2.0",
+    version := "1.0.5",
+    scalaVersion := "3.5.2",
     scalacOptions ++=
       Seq(
         "-deprecation", "-feature", "-unchecked",
@@ -27,7 +27,6 @@ lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform).in(file("
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
   ).
   nativeSettings(
-    nativeLinkStubs := true,
   ).
   jsSettings(
     jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv(),
