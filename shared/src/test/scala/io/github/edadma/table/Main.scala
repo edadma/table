@@ -1,6 +1,6 @@
 package io.github.edadma.table
 
-object Main extends App {
+@main def run(): Unit = {
 
   println()
   println(
@@ -9,7 +9,7 @@ object Main extends App {
       row(null, "this is a string", List(1, 2, 3))
       row(12, 234, 3456)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
   println(
@@ -18,7 +18,7 @@ object Main extends App {
       row(null, "this is a string", List(1, 2, 3))
       row(12, 234, 3456)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
   println(
@@ -27,7 +27,7 @@ object Main extends App {
       row(null, "this is a string", List(1, 2, 3))
       row(12, 234, 3456)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
   println(
@@ -36,7 +36,7 @@ object Main extends App {
       row(null, "this is a string", List(1, 2, 3))
       row(12, 234, 3456)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
   println(
@@ -45,7 +45,7 @@ object Main extends App {
       row(null, "this is a string", List(1, 2, 3))
       row(12, 234, 3456)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
   println(
@@ -54,7 +54,7 @@ object Main extends App {
       row(null, "this is a string", List(1, 2, 3))
       row(12, 234, 3456)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
   println(
@@ -64,7 +64,7 @@ object Main extends App {
       row(null, "this is a string", List(1, 2, 3))
       row(12, 234, 3456)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
   println(
@@ -73,7 +73,7 @@ object Main extends App {
       row(null, "this is a string", List(1, 2, 3))
       row(12, 234, 3456)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
   println(
@@ -82,7 +82,7 @@ object Main extends App {
       row(4, 5, 6)
       row(7, 8, 9)
       1 to 3 foreach rightAlignment
-    }
+    },
   )
 
 }
