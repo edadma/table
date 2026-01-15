@@ -381,12 +381,15 @@ class TextTable(
         if (underlined && ansi)
           buf append Console.UNDERLINED
 
-        buf append " " * post
+        // Skip trailing padding for last column in borderless tables
+        if (j < columns - 1 || matrix || border != NONE || markdown)
+          buf append " " * post
 
         if (underlined && ansi)
           buf append Console.RESET
 
-        buf append ' '
+        if (j < columns - 1 || matrix || border != NONE || markdown)
+          buf append ' '
       }
 
       if (matrix || border != NONE || markdown)
