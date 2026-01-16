@@ -123,6 +123,23 @@ class TextTableTest extends AnyFlatSpec with Matchers:
          |""".stripMargin
   }
 
+  "Border without column dividers" should "render outer frame only" in {
+    val t = new TextTable(border = LIGHT, headerLine = true, headerBold = false, headerUnderlined = false) {
+      noansi()
+      header("A", "B", "C")
+      row(1, 2, 3)
+      row(4, 5, 6)
+    }
+    t.toString shouldBe
+      """|┌─────────┐
+         |│ A  B  C │
+         |├─────────┤
+         |│ 1  2  3 │
+         |│ 4  5  6 │
+         |└─────────┘
+         |""".stripMargin
+  }
+
   "LIGHT border" should "render with Unicode light box characters" in {
     val t = new TextTable(border = LIGHT, columnDividers = true, headerLine = true, headerBold = false, headerUnderlined = false) {
       noansi()
@@ -169,7 +186,7 @@ class TextTableTest extends AnyFlatSpec with Matchers:
          |""".stripMargin
   }
 
-  "Matrix mode" should "render with bracket notation" in {
+  "Matrix mode" should "render with square brackets by default" in {
     val t = new TextTable(matrix = true) {
       noansi()
       row(1, 2, 3)
@@ -177,12 +194,40 @@ class TextTableTest extends AnyFlatSpec with Matchers:
       row(7, 8, 9)
     }
     t.toString shouldBe
-      """|┌         ┐
-         |│ 1  2  3 │
-         |│ 4  5  6 │
-         |│ 7  8  9 │
-         |└         ┘
+      """|⎡1  2  3⎤
+         |⎢4  5  6⎥
+         |⎣7  8  9⎦
          |""".stripMargin
+  }
+
+  it should "render with rounded brackets (parentheses) when matrixRounded is true" in {
+    val t = new TextTable(matrix = true, matrixRounded = true) {
+      noansi()
+      row(1, 2, 3)
+      row(4, 5, 6)
+      row(7, 8, 9)
+    }
+    t.toString shouldBe
+      """|⎛1  2  3⎞
+         |⎜4  5  6⎟
+         |⎝7  8  9⎠
+         |""".stripMargin
+  }
+
+  it should "render single-row matrix with extension brackets" in {
+    val t = new TextTable(matrix = true) {
+      noansi()
+      row(1, 2, 3)
+    }
+    t.toString shouldBe "⎢1  2  3⎥\n"
+  }
+
+  it should "render single-row rounded matrix" in {
+    val t = new TextTable(matrix = true, matrixRounded = true) {
+      noansi()
+      row(1, 2, 3)
+    }
+    t.toString shouldBe "⎜1  2  3⎟\n"
   }
 
   "Tabbed output" should "separate columns with tabs" in {
@@ -305,6 +350,20 @@ class TextTableTest extends AnyFlatSpec with Matchers:
       """| A     B       C
          | left  center  right
          | x     x       x
+         |""".stripMargin
+  }
+
+  "Table without headers" should "render data rows only" in {
+    val t = new TextTable(border = ASCII, columnDividers = true) {
+      noansi()
+      row("Alice", 30, "New York")
+      row("Bob", 25, "London")
+    }
+    t.toString shouldBe
+      """|+-------+----+----------+
+         || Alice | 30 | New York |
+         || Bob   | 25 | London   |
+         |+-------+----+----------+
          |""".stripMargin
   }
 

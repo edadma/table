@@ -50,6 +50,22 @@ object TextTable {
     val `BOX DRAWINGS DOWN LIGHT AND HORIZONTAL HEAVY`     = '\u252F'
     val `BOX DRAWINGS VERTICAL LIGHT AND HORIZONTAL HEAVY` = '\u253F'
     val `BOX DRAWINGS UP LIGHT AND HORIZONTAL HEAVY`       = '\u2537'
+
+    // Matrix bracket characters - square brackets
+    val `LEFT SQUARE BRACKET UPPER CORNER`  = '\u23A1'
+    val `LEFT SQUARE BRACKET EXTENSION`     = '\u23A2'
+    val `LEFT SQUARE BRACKET LOWER CORNER`  = '\u23A3'
+    val `RIGHT SQUARE BRACKET UPPER CORNER` = '\u23A4'
+    val `RIGHT SQUARE BRACKET EXTENSION`    = '\u23A5'
+    val `RIGHT SQUARE BRACKET LOWER CORNER` = '\u23A6'
+
+    // Matrix bracket characters - parentheses (rounded)
+    val `LEFT PARENTHESIS UPPER HOOK`  = '\u239B'
+    val `LEFT PARENTHESIS EXTENSION`   = '\u239C'
+    val `LEFT PARENTHESIS LOWER HOOK`  = '\u239D'
+    val `RIGHT PARENTHESIS UPPER HOOK` = '\u239E'
+    val `RIGHT PARENTHESIS EXTENSION`  = '\u239F'
+    val `RIGHT PARENTHESIS LOWER HOOK` = '\u23A0'
   }
 
   def apply(result: ResultSet): TextTable = {
@@ -85,6 +101,7 @@ class TextTable(
     headerUnderlined: Boolean = true,
     headerCentered: Boolean = true,
     matrix: Boolean = false,
+    matrixRounded: Boolean = false,
     markdown: Boolean = false,
     tabbed: Boolean = false,
 ) {
@@ -318,20 +335,36 @@ class TextTable(
       buf append '\n'
     }
 
-    if (matrix || border != NONE && !markdown && !tabbed)
+    if (border != NONE && !markdown && !tabbed && !matrix)
       drawLine()
 
-    for (i <- 0 until table.length - 1) {
+    val rowCount = table.length - 1
+
+    for (i <- 0 until rowCount) {
       if (lines contains i)
-        if (!tabbed)
+        if (!tabbed && !matrix)
           drawLine()
 
       for (j <- 0 until columns) {
         if (j == 0) {
-          if (matrix || border != NONE || markdown)
+          if (matrix) {
+            // Use proper mathematical bracket characters
+            val leftBracket =
+              if (rowCount == 1) {
+                // Single row - use extension character
+                if (matrixRounded) `LEFT PARENTHESIS EXTENSION` else `LEFT SQUARE BRACKET EXTENSION`
+              } else if (i == 0) {
+                if (matrixRounded) `LEFT PARENTHESIS UPPER HOOK` else `LEFT SQUARE BRACKET UPPER CORNER`
+              } else if (i == rowCount - 1) {
+                if (matrixRounded) `LEFT PARENTHESIS LOWER HOOK` else `LEFT SQUARE BRACKET LOWER CORNER`
+              } else {
+                if (matrixRounded) `LEFT PARENTHESIS EXTENSION` else `LEFT SQUARE BRACKET EXTENSION`
+              }
+            buf append leftBracket
+          } else if (border != NONE || markdown)
             buf append (if (border == ASCII || markdown) '|'
                         else {
-                          if (matrix || border == LIGHT)
+                          if (border == LIGHT)
                             `BOX DRAWINGS LIGHT VERTICAL`
                           else
                             `BOX DRAWINGS HEAVY VERTICAL`
@@ -342,7 +375,9 @@ class TextTable(
         else if (tabbed)
           buf append '\t'
 
-        buf append ' '
+        // No leading space after matrix bracket
+        if (!matrix || j > 0)
+          buf append ' '
 
         val elem        = table(i)(j).contents
         val diff        = widths(j) - elem.length
@@ -382,20 +417,34 @@ class TextTable(
           buf append Console.UNDERLINED
 
         // Skip trailing padding for last column in borderless tables
-        if (j < columns - 1 || matrix || border != NONE || markdown)
+        if (j < columns - 1 || border != NONE || markdown)
           buf append " " * post
 
         if (underlined && ansi)
           buf append Console.RESET
 
-        if (j < columns - 1 || matrix || border != NONE || markdown)
+        // No trailing space before matrix bracket
+        if (j < columns - 1 || border != NONE || markdown)
           buf append ' '
       }
 
-      if (matrix || border != NONE || markdown)
+      if (matrix) {
+        // Use proper mathematical bracket characters
+        val rightBracket =
+          if (rowCount == 1) {
+            if (matrixRounded) `RIGHT PARENTHESIS EXTENSION` else `RIGHT SQUARE BRACKET EXTENSION`
+          } else if (i == 0) {
+            if (matrixRounded) `RIGHT PARENTHESIS UPPER HOOK` else `RIGHT SQUARE BRACKET UPPER CORNER`
+          } else if (i == rowCount - 1) {
+            if (matrixRounded) `RIGHT PARENTHESIS LOWER HOOK` else `RIGHT SQUARE BRACKET LOWER CORNER`
+          } else {
+            if (matrixRounded) `RIGHT PARENTHESIS EXTENSION` else `RIGHT SQUARE BRACKET EXTENSION`
+          }
+        buf append rightBracket
+      } else if (border != NONE || markdown)
         buf append (if (border == ASCII || markdown) '|'
                     else {
-                      if (matrix || border == LIGHT)
+                      if (border == LIGHT)
                         `BOX DRAWINGS LIGHT VERTICAL`
                       else
                         `BOX DRAWINGS HEAVY VERTICAL`
@@ -405,7 +454,7 @@ class TextTable(
       lineind += 1
     }
 
-    if (matrix || border != NONE && !tabbed)
+    if (border != NONE && !tabbed && !matrix)
       drawLine()
 
     buf.toString

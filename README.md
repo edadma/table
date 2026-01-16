@@ -20,7 +20,7 @@ A Scala 3 library for rendering text tables with support for multiple output for
 Add to your `build.sbt`:
 
 ```scala
-libraryDependencies += "io.github.edadma" %%% "table" % "0.0.2"
+libraryDependencies += "io.github.edadma" %%% "table" % "0.0.3"
 ```
 
 ## Basic Usage
@@ -58,7 +58,8 @@ Output:
 | `headerLine` | `Boolean` | `false` | Draw a line under the header |
 | `headerUnderlined` | `Boolean` | `true` | Underline header text (ANSI) |
 | `headerCentered` | `Boolean` | `true` | Center-align header text |
-| `matrix` | `Boolean` | `false` | Matrix notation style (brackets) |
+| `matrix` | `Boolean` | `false` | Matrix notation style with square brackets |
+| `matrixRounded` | `Boolean` | `false` | Use rounded brackets (parentheses) for matrix |
 | `markdown` | `Boolean` | `false` | Output as Markdown table |
 | `tabbed` | `Boolean` | `false` | Output as tab-separated values |
 
@@ -147,7 +148,7 @@ Output:
 ┗━━━┷━━━┷━━━┛
 ```
 
-### Matrix Style
+### Matrix Style (Square Brackets)
 
 ```scala
 val t = new TextTable(matrix = true) {
@@ -161,11 +162,28 @@ println(t)
 
 Output:
 ```
-┌         ┐
-│ 1  0  0 │
-│ 0  1  0 │
-│ 0  0  1 │
-└         ┘
+⎡1  0  0⎤
+⎢0  1  0⎥
+⎣0  0  1⎦
+```
+
+### Matrix Style (Rounded/Parentheses)
+
+```scala
+val t = new TextTable(matrix = true, matrixRounded = true) {
+  row(1, 0, 0)
+  row(0, 1, 0)
+  row(0, 0, 1)
+  1 to 3 foreach rightAlignment
+}
+println(t)
+```
+
+Output:
+```
+⎛1  0  0⎞
+⎜0  1  0⎟
+⎝0  0  1⎠
 ```
 
 ### Tab-Separated Values
