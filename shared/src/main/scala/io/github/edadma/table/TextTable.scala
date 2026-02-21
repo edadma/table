@@ -416,15 +416,15 @@ class TextTable(
         if (underlined && ansi)
           buf append Console.UNDERLINED
 
-        // Skip trailing padding for last column in borderless tables
-        if (j < columns - 1 || border != NONE || markdown)
+        // Skip trailing padding for last column in borderless tables (unless underlined)
+        if (j < columns - 1 || border != NONE || markdown || underlined)
           buf append " " * post
 
         if (underlined && ansi)
           buf append Console.RESET
 
         // No trailing space before matrix bracket
-        if (j < columns - 1 || border != NONE || markdown)
+        if (j < columns - 1 || border != NONE || markdown || underlined)
           buf append ' '
       }
 
