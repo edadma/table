@@ -1,5 +1,3 @@
-# @edadma/table
-
 Text table rendering with multiple border styles, column alignment, ANSI formatting, and Markdown output.
 
 ## Installation

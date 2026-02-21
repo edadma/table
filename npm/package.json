@@ -1,6 +1,6 @@
 {
   "name": "@edadma/table",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Text table rendering with multiple border styles, alignment, and ANSI formatting",
   "type": "module",
   "exports": {
