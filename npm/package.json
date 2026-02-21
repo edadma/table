@@ -1,0 +1,41 @@
+{
+  "name": "@edadma/table",
+  "version": "0.0.3",
+  "description": "Text table rendering with multiple border styles, alignment, and ANSI formatting",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./main.js"
+    }
+  },
+  "main": "main.js",
+  "types": "index.d.ts",
+  "files": [
+    "main.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edadma/table.git"
+  },
+  "keywords": [
+    "table",
+    "text-table",
+    "ascii-table",
+    "terminal",
+    "formatting",
+    "unicode",
+    "box-drawing",
+    "markdown",
+    "matrix",
+    "ansi"
+  ],
+  "author": "Edward A. Maxedon, Sr.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edadma/table/issues"
+  },
+  "homepage": "https://github.com/edadma/table#readme"
+}

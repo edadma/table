@@ -67,7 +67,7 @@ lazy val table = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     scalaJSLinkerConfig ~= { _.withSourceMap(false) },
     Test / scalaJSUseMainModuleInitializer := false,
     Test / scalaJSUseTestModuleInitializer := true,
-    scalaJSUseMainModuleInitializer        := true,
+    scalaJSUseMainModuleInitializer        := false,
   )
 
 lazy val root = project
